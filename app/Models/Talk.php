@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Talk extends Model
 {
-    protected $fillable = ['topic', 'description', 'date', 'time'];
+    protected $fillable = ['uuid', 'topic', 'description', 'date', 'time'];
 }

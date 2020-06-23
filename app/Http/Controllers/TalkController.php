@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Talk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class TalkController extends Controller
 {
@@ -33,7 +34,7 @@ class TalkController extends Controller
             'message' => $validator->errors()
         ];
 
-        $talk = Talk::create($validator->validated());
+        $talk = Talk::create(array_merge($validator->validated(), ['uuid' => Str::uuid()->toString()]));
 
         if (!$talk) return [
             'status' => false,
@@ -43,6 +44,30 @@ class TalkController extends Controller
         return [
             'status' => true,
             'message' => "Talk created successfully"
+        ];
+    }
+
+    public function removeTalk(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'uuid' => 'required|uuid|exists:talks,uuid',
+        ]);
+
+        if ($validator->fails()) return [
+            'status' => false,
+            'message' => $validator->errors()
+        ];
+
+        $talk = Talk::where('uuid', $request->uuid)->first();
+
+        if (!$talk->delete()) return [
+            'status' => false,
+            'message' => "Failed remove talk at this time"
+        ];
+
+        return [
+            'status' => true,
+            'message' => "Talk removed successfully"
         ];
     }
 }

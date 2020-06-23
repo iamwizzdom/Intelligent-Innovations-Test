@@ -4,7 +4,7 @@
 
     <div class="card mt-5">
         <div class="card-body">
-            <form method="post" action="{{ route('attendee-add') }}" id="add-talk-form">
+            <form method="post" action="{{ route('attendee-add-api') }}" id="add-talk-form">
 
                 <h5 class="mb-4 text-uppercase">Attendee Info</h5>
 

@@ -15,6 +15,7 @@ class CreateTalksTable extends Migration
     {
         Schema::create('talks', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->unique();
             $table->string('topic');
             $table->string('description')->nullable();
             $table->date('date');
